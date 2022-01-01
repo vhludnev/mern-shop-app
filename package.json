@@ -1,0 +1,27 @@
+{
+  "name": "mern-shop",
+  "version": "1.0.0",
+  "description": "MERN shop app",
+  "main": "server.js",
+  "scripts": {
+    "start": "node backend/server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vhludnev/mern-shop-app.git"
+  },
+  "keywords": [
+    "mern",
+    "react",
+    "bootstrap"
+  ],
+  "author": "Vyacheslav Hludnev",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/vhludnev/mern-shop-app/issues"
+  },
+  "homepage": "https://github.com/vhludnev/mern-shop-app#readme",
+  "dependencies": {
+    "express": "^4.17.2"
+  }
+}
