@@ -16,6 +16,9 @@ router.get(
     //res.json(newProducts)
     //res.json(products)
     const products = await Product.find({})
+    /* for testing: */
+    //res.status(401)
+    //hrow new Error('Not Authorized')
     res.json(products)
   })
 )
