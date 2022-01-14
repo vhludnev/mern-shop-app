@@ -6,8 +6,7 @@ import Message from '../components/Message'
 import { addToCart, removeFromCart } from '../actions/cartActions'
 
 const CartScreen = (/* { match, location, history } */) => {
-  const { id } = useParams(),
-    productId = id,
+  const { id: productId } = useParams(), // id renamed for productId
     location = useLocation(),
     navigate = useNavigate()
 

@@ -10,7 +10,6 @@ const PlaceOrderScreen = (/* {history} */) => {
   const dispatch = useDispatch()
 
   const cart = useSelector((state) => state.cart)
-  console.log(cart)
   // Calculate prices
   const addDecimals = (num) => (Math.round(num * 100) / 100).toFixed(2) // returns numbers in "0.00" format
 
