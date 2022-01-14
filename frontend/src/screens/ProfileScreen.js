@@ -56,8 +56,9 @@ const ProfileScreen = (/* { location, history } */) => {
         {error && <Message variant='danger'>{error}</Message>}
         {success && <Message variant='success'>Profile Updated</Message>}
         {loading && <Loader />}
+        <br />
         <Form onSubmit={submitHandler}>
-          <Form.Group controlId='name'>
+          <Form.Group className='mb-3' controlId='name'>
             <Form.Label>Name</Form.Label>
             <Form.Control
               type='name'
@@ -67,7 +68,7 @@ const ProfileScreen = (/* { location, history } */) => {
             ></Form.Control>
           </Form.Group>
 
-          <Form.Group controlId='email'>
+          <Form.Group className='mb-3' controlId='email'>
             <Form.Label>Email</Form.Label>
             <Form.Control
               type='email'
@@ -77,7 +78,7 @@ const ProfileScreen = (/* { location, history } */) => {
             ></Form.Control>
           </Form.Group>
 
-          <Form.Group controlId='password'>
+          <Form.Group className='mb-3' controlId='password'>
             <Form.Label>Password</Form.Label>
             <Form.Control
               type='password'
@@ -87,7 +88,7 @@ const ProfileScreen = (/* { location, history } */) => {
             ></Form.Control>
           </Form.Group>
 
-          <Form.Group controlId='confirmPassword'>
+          <Form.Group className='mb-3' controlId='confirmPassword'>
             <Form.Label>Confirm Password</Form.Label>
             <Form.Control
               type='password'

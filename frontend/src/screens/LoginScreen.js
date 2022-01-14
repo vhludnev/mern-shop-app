@@ -21,7 +21,7 @@ const LoginScreen = (/* { location, history } */) => {
   const redirect = location.search ? location.search.split('=')[1] : '/'
 
   useEffect(() => {
-    if (userInfo) navigate(redirect)
+    if (userInfo) navigate(`/${redirect}`)
   }, [navigate, userInfo, redirect])
 
   const submitHandler = (e) => {
@@ -35,21 +35,23 @@ const LoginScreen = (/* { location, history } */) => {
       {error && <Message variant='danger'>{error}</Message>}
       {loading && <Loader />}
       <Form onSubmit={submitHandler}>
-        <Form.Group controlId='email'>
+        <Form.Group className='mb-3' controlId='email'>
           <Form.Label>Email</Form.Label>
           <Form.Control
             type='email'
             placeholder='Enter email'
+            required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           ></Form.Control>
         </Form.Group>
 
-        <Form.Group controlId='password'>
+        <Form.Group className='mb-3' controlId='password'>
           <Form.Label>Password</Form.Label>
           <Form.Control
             type='password'
             placeholder='Enter password'
+            required
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           ></Form.Control>
