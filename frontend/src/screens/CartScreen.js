@@ -91,14 +91,24 @@ const CartScreen = (/* { match, location, history } */) => {
                 .reduce((acc, item) => acc + item.qty * item.price, 0)
                 .toFixed(2)}
             </ListGroup.Item>
-            <ListGroup.Item>
+            <ListGroup.Item className='d-grid gap-2 d-md-block'>
               <Button
                 type='button'
-                className='btn-block'
+                variant='primary'
                 disabled={cartItems.length === 0}
                 onClick={checkoutHandler}
               >
                 Proceed To Checkout
+              </Button>{' '}
+              {/* <Link className='btn btn-outline-dark' role='button' to='/'>
+                Go Back
+              </Link> */}
+              <Button
+                type='button'
+                variant='link'
+                onClick={() => navigate('/')}
+              >
+                Continue
               </Button>
             </ListGroup.Item>
           </ListGroup>
