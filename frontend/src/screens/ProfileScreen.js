@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate /* , useLocation */ } from 'react-router-dom'
 import { Table, Form, Button, Row, Col } from 'react-bootstrap'
-import { LinkContainer } from 'react-router-bootstrap'
+//import { LinkContainer } from 'react-router-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
@@ -164,11 +164,18 @@ const ProfileScreen = (/* { location, history } */) => {
                       )}
                     </td>
                     <td>
-                      <LinkContainer to={`/order/${id}`}>
+                      {/* <LinkContainer to={`/order/${id}`}>
                         <Button className='btn-sm' variant='light'>
                           Details
                         </Button>
-                      </LinkContainer>
+                      </LinkContainer> */}
+                      <Button
+                        href={`/order/${id}`}
+                        variant='light'
+                        className='btn-sm'
+                      >
+                        Details
+                      </Button>
                     </td>
                   </tr>
                 )

@@ -18,11 +18,14 @@ const LoginScreen = (/* { location, history } */) => {
   const location = useLocation()
   const navigate = useNavigate()
 
-  const redirect = location.search ? location.search.split('=')[1] : '/'
+  //const redirect = location.search ? location.search.split('=')[1] : '/'
+  const redirect = location.search ? location.search.split('=')[1] : null
 
   useEffect(() => {
-    if (userInfo) navigate(redirect)
-  }, [navigate, userInfo, redirect])
+    if (userInfo) {
+      location.search ? navigate('/' + redirect) : navigate('/')
+    }
+  }, [navigate, userInfo, redirect, location])
 
   const submitHandler = (e) => {
     e.preventDefault()
