@@ -34,8 +34,11 @@ const App = () => {
             <Route path='/register' element={<RegisterScreen />} />
             <Route path='/profile' element={<ProfileScreen />} />
             <Route path='/product/:id' element={<ProductScreen />} />
-            <Route path='/cart/:id' element={<CartScreen />} />
-            <Route path='/cart' element={<CartScreen />} />
+            {/* <Route path='/cart/:id' element={<CartScreen />} />
+            <Route path='/cart' element={<CartScreen />} /> */}
+            <Route path='/cart' element={<CartScreen />}>
+              <Route path=':id' element={<CartScreen />} />
+            </Route>
             <Route path='/admin/userlist' element={<UserListScreen />} />
             <Route path='/admin/user/:id/edit' element={<UserEditScreen />} />
             <Route path='/admin/productlist' element={<ProductListScreen />} />
@@ -44,7 +47,15 @@ const App = () => {
               element={<ProductEditScreen />}
             />
             <Route path='/admin/orderlist' element={<OrderListScreen />} />
-            <Route path='/' element={<HomeScreen />} exact />
+            {/* <Route path='/admin' element={<p>Hi</p>}>
+              <Route path='userlist' element={<UserListScreen />} />
+              <Route path='user/:id/edit' element={<UserEditScreen />} />
+              <Route path='productlist' element={<ProductListScreen />} />
+              <Route path='product/:id/edit' element={<ProductEditScreen />} />
+              <Route path='orderlist' element={<OrderListScreen />} />
+            </Route> */}
+            <Route path='/search/:keyword' element={<HomeScreen />} />
+            <Route path='/' element={<HomeScreen />} /* exact */ />
           </Routes>
         </Container>
       </main>
