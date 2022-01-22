@@ -50,3 +50,7 @@ h3 {
 .carousel a {
     margin: 0 auto;
 }
+
+.dropdown:hover>.dropdown-menu {
+    display: block;
+}

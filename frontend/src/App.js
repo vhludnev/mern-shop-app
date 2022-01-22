@@ -1,5 +1,10 @@
 import React from 'react'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from 'react-router-dom'
 import { Container } from 'react-bootstrap'
 import Header from './components/Header'
 import Footer from './components/Footer'
@@ -18,6 +23,7 @@ import UserEditScreen from './screens/UserEditScreen'
 import ProductListScreen from './screens/ProductListScreen'
 import ProductEditScreen from './screens/ProductEditScreen'
 import OrderListScreen from './screens/OrderListScreen'
+import PageNotFound from './screens/404Screen'
 
 const App = () => {
   return (
@@ -39,30 +45,33 @@ const App = () => {
             <Route path='/cart' element={<CartScreen />}>
               <Route path=':id' element={<CartScreen />} />
             </Route>
-            <Route path='/admin/userlist' element={<UserListScreen />} />
+            {/* <Route path='/admin/userlist' element={<UserListScreen />} />
             <Route path='/admin/user/:id/edit' element={<UserEditScreen />} />
             <Route
               path='/admin/productlist'
               element={<ProductListScreen />}
-              /* exact */
+              exact
             />
             <Route
               path='/admin/productlist/:pageNumber'
               element={<ProductListScreen />}
-              /* exact */
+              exact
             />
             <Route
               path='/admin/product/:id/edit'
               element={<ProductEditScreen />}
             />
-            <Route path='/admin/orderlist' element={<OrderListScreen />} />
-            {/* <Route path='/admin' element={<p>Hi</p>}>
+            <Route path='/admin/orderlist' element={<OrderListScreen />} /> */}
+            <Route path='/admin/*'>
+              <Route index={true} element={<Navigate to='/' />} />
               <Route path='userlist' element={<UserListScreen />} />
               <Route path='user/:id/edit' element={<UserEditScreen />} />
-              <Route path='productlist' element={<ProductListScreen />} />
+              <Route path='productlist' exact element={<ProductListScreen />}>
+                <Route path=':pageNumber' element={<ProductListScreen />} />
+              </Route>
               <Route path='product/:id/edit' element={<ProductEditScreen />} />
               <Route path='orderlist' element={<OrderListScreen />} />
-            </Route> */}
+            </Route>
             <Route
               path='/search/:keyword'
               element={<HomeScreen />} /* exact */
@@ -77,6 +86,7 @@ const App = () => {
               /* exact */
             />
             <Route path='/' element={<HomeScreen />} /* exact */ />
+            <Route path='*' element={<PageNotFound />} />
           </Routes>
         </Container>
       </main>
