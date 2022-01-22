@@ -7,6 +7,7 @@ import Rating from '../components/Rating'
 //import axios from 'axios'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
+import Meta from '../components/Meta'
 import {
   listProductDetails,
   createProductReview,
@@ -64,15 +65,16 @@ const ProductScreen = (/* { match } */) => {
 
   return (
     <>
-      <Link className='btn btn-light my-3' to='/'>
+      <Button className='btn btn-light my-2' onClick={() => navigate(-1)}>
         Go Back
-      </Link>
+      </Button>
       {loading ? (
         <Loader />
       ) : error ? (
         <Message variant='danger'>{error}</Message>
       ) : (
         <>
+          <Meta title={product.name} />
           <Row className='mb-5'>
             <Col md={6}>
               <Image src={product.image} alt={product.name} fluid />

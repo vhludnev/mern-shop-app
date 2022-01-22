@@ -32,7 +32,17 @@ const CartScreen = (/* { match, location, history } */) => {
         <br />
         {cartItems.length === 0 ? (
           <Message>
-            Your cart is empty <Link to='/'>Go Back</Link>
+            Your cart is empty {/* <Link to='/'>Go Back</Link> */}{' '}
+            <Button
+              style={{
+                background: 'transparent',
+                textDecoration: 'underline',
+              }}
+              className='btn btn-light'
+              onClick={() => navigate(-1)}
+            >
+              Go Back
+            </Button>
           </Message>
         ) : (
           <ListGroup variant='flush'>

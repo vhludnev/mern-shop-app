@@ -26,7 +26,7 @@ const Header = () => {
           <Navbar.Collapse id='basic-navbar-nav'>
             {/* <Route render={({history}) => <SearchBox history={history} />} /> */}
             <SearchBox />
-            <Nav defaultActiveKey='/' className='ms-auto'>
+            <Nav activeKey='/' className='ms-auto'>
               <LinkContainer to='/cart'>
                 <Nav.Link>
                   <i className='fas fa-shopping-cart'></i> Cart

@@ -1,7 +1,7 @@
-import React, { /* useState, */ useEffect } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import React, { useEffect } from 'react'
+import { useParams, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { Row, Col } from 'react-bootstrap'
+import { Row, Col, Button } from 'react-bootstrap'
 import Product from '../components/Product'
 //import products from '../products'
 //import axios from 'axios'
@@ -9,11 +9,13 @@ import Message from '../components/Message'
 import Loader from '../components/Loader'
 import Paginate from '../components/Paginate'
 import ProductCarousel from '../components/ProductCarousel'
+import Meta from '../components/Meta'
 import { listProducts } from '../actions/productActions'
 
 const HomeScreen = (/* { match } */) => {
   //const keyword = match.params.keyword
   const { keyword, pageNumber = 1 } = useParams()
+  const navigate = useNavigate()
   //const [products, setProducts] = useState([])
 
   // useEffect(() => {
@@ -37,7 +39,14 @@ const HomeScreen = (/* { match } */) => {
 
   return (
     <>
-      {!keyword && <ProductCarousel />}
+      <Meta />
+      {!keyword ? (
+        <ProductCarousel />
+      ) : (
+        <Button className='btn btn-light my-3' onClick={() => navigate(-1)}>
+          Go Back
+        </Button>
+      )}
       <h1>Latest Products</h1>
       {/* <Row>
         {products.map((product) => (
