@@ -52,6 +52,7 @@ const ProductScreen = (/* { match } */) => {
       dispatch({ type: PRODUCT_CREATE_REVIEW_RESET })
     }
     dispatch(listProductDetails(id))
+    return () => dispatch({ type: PRODUCT_CREATE_REVIEW_RESET })
   }, [dispatch, id, successProductReview])
 
   const addToCartHandler = () => navigate(`/cart/${id}?qty=${qty}`)
@@ -154,7 +155,9 @@ const ProductScreen = (/* { match } */) => {
           <Row>
             <Col md={6}>
               <h2>Reviews</h2>
-              {product.reviews.length === 0 && <Message>No Reviews</Message>}
+              {product.reviews.length === 0 && (
+                <Message variant='light'>No Reviews</Message>
+              )}
               <ListGroup variant='flush'>
                 {product.reviews.map(
                   ({ _id: id, name, rating, createdAt, comment }) => (
@@ -167,9 +170,16 @@ const ProductScreen = (/* { match } */) => {
                   )
                 )}
                 <ListGroup.Item className='mt-3'>
-                  <h2>Write a Customer Review</h2>
+                  {product.reviews.length === 0 ? (
+                    <h2>Be First To Write A Review</h2>
+                  ) : (
+                    <h2>Write a Customer Review</h2>
+                  )}
                   {errorProductReview && (
-                    <Message variant='danger'>{errorProductReview}</Message>
+                    <Message variant='danger'>
+                      {/* {errorProductReview} */}
+                      {<div>Something went wrong!</div>}
+                    </Message>
                   )}
                   {userInfo ? (
                     <Form onSubmit={submitHandler}>

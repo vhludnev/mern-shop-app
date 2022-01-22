@@ -44,12 +44,12 @@ const App = () => {
             <Route
               path='/admin/productlist'
               element={<ProductListScreen />}
-              exact
+              /* exact */
             />
             <Route
               path='/admin/productlist/:pageNumber'
               element={<ProductListScreen />}
-              exact
+              /* exact */
             />
             <Route
               path='/admin/product/:id/edit'
@@ -63,12 +63,18 @@ const App = () => {
               <Route path='product/:id/edit' element={<ProductEditScreen />} />
               <Route path='orderlist' element={<OrderListScreen />} />
             </Route> */}
-            <Route path='/search/:keyword' element={<HomeScreen />} exact />
-            <Route path='/page/:pageNumber' element={<HomeScreen />} exact />
+            <Route
+              path='/search/:keyword'
+              element={<HomeScreen />} /* exact */
+            />
+            <Route
+              path='/page/:pageNumber'
+              element={<HomeScreen />} /* exact */
+            />
             <Route
               path='/search/:keyword/page/:pageNumber'
               element={<HomeScreen />}
-              exact
+              /* exact */
             />
             <Route path='/' element={<HomeScreen />} /* exact */ />
           </Routes>
