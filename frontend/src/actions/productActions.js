@@ -22,12 +22,26 @@ import {
   PRODUCT_TOP_SUCCESS,
   PRODUCT_TOP_FAIL,
 } from '../constants/productConstants'
+import { logout } from './userActions'
 
-const errorMessage = (error) => {
-  return error.response && error.response.data.message
-    ? error.response.data.message
-    : error.message
+const errorMessage = (error, dispatch) => {
+  const message =
+    error.response && error.response.data.message
+      ? error.response.data.message
+      : error.message
+
+  if (message === 'Not authorized, token failed') {
+    dispatch(logout())
+  } else {
+    return message
+  }
 }
+
+// const errorMessage = (error) => {
+//   return error.response && error.response.data.message
+//     ? error.response.data.message
+//     : error.message
+// }
 
 export const listProducts =
   (keyword = '', pageNumber = '') =>

@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { CART_CLEAR_ITEMS } from '../constants/cartConstants'
 import {
   ORDER_CREATE_REQUEST,
   ORDER_CREATE_SUCCESS,
@@ -19,11 +20,19 @@ import {
   ORDER_LIST_SUCCESS,
   ORDER_LIST_FAIL,
 } from '../constants/orderConstants'
+import { logout } from './userActions'
 
-const errorMessage = (error) => {
-  return error.response && error.response.data.message
-    ? error.response.data.message
-    : error.message
+const errorMessage = (error, dispatch) => {
+  const message =
+    error.response && error.response.data.message
+      ? error.response.data.message
+      : error.message
+
+  if (message === 'Not authorized, token failed') {
+    dispatch(logout())
+  } else {
+    return message
+  }
 }
 
 export const createOrder = (order) => async (dispatch, getState) => {
@@ -49,6 +58,11 @@ export const createOrder = (order) => async (dispatch, getState) => {
       type: ORDER_CREATE_SUCCESS,
       payload: data,
     })
+    dispatch({
+      type: CART_CLEAR_ITEMS,
+      payload: data,
+    })
+    localStorage.removeItem('cartItems')
   } catch (error) {
     dispatch({
       type: ORDER_CREATE_FAIL,

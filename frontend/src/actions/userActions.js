@@ -27,11 +27,24 @@ import {
 } from '../constants/userConstants'
 import { ORDER_LIST_MY_RESET } from '../constants/orderConstants'
 
-const errorMessage = (error) => {
-  return error.response && error.response.data.message
-    ? error.response.data.message
-    : error.message
+const errorMessage = (error, dispatch) => {
+  const message =
+    error.response && error.response.data.message
+      ? error.response.data.message
+      : error.message
+
+  if (message === 'Not authorized, token failed') {
+    dispatch(logout())
+  } else {
+    return message
+  }
 }
+
+// const errorMessage = (error) => {
+//   return error.response && error.response.data.message
+//     ? error.response.data.message
+//     : error.message
+// }
 
 export const login = (email, password) => async (dispatch) => {
   try {
@@ -166,6 +179,11 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
       type: USER_UPDATE_PROFILE_SUCCESS,
       payload: data,
     })
+    dispatch({
+      type: USER_LOGIN_SUCCESS,
+      payload: data,
+    })
+    localStorage.setItem('userInfo', JSON.stringify(data))
   } catch (error) {
     dispatch({
       type: USER_UPDATE_PROFILE_FAIL,

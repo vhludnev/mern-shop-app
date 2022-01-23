@@ -36,25 +36,44 @@ const ProductScreen = (/* { match } */) => {
   //   fetchProduct()
   // }, [id])
   const productDetails = useSelector((state) => state.productDetails)
-  const { loading, error, product } = productDetails
+  const {
+    loading,
+    error,
+    product: {
+      _id: productId,
+      name,
+      image,
+      rating: productRating,
+      numReviews,
+      description,
+      price,
+      countInStock,
+      reviews,
+    },
+  } = productDetails
 
   const userLogin = useSelector((state) => state.userLogin)
   const { userInfo } = userLogin
 
   const productReviewCreate = useSelector((state) => state.productReviewCreate)
-  const { success: successProductReview, error: errorProductReview } =
-    productReviewCreate
+  const {
+    success: successProductReview,
+    loading: loadingProductReview,
+    error: errorProductReview,
+  } = productReviewCreate
 
   useEffect(() => {
     if (successProductReview) {
-      alert('Review Submitted!')
+      //alert('Review Submitted!')
       setRating(0)
       setComment('')
+    }
+    if (!productId || productId !== id) {
+      dispatch(listProductDetails(id))
       dispatch({ type: PRODUCT_CREATE_REVIEW_RESET })
     }
-    dispatch(listProductDetails(id))
-    return () => dispatch({ type: PRODUCT_CREATE_REVIEW_RESET })
-  }, [dispatch, id, successProductReview])
+    //return () => dispatch({ type: PRODUCT_CREATE_REVIEW_RESET })
+  }, [dispatch, id, successProductReview, productId])
 
   const addToCartHandler = () => navigate(`/cart/${id}?qty=${qty}`)
 
@@ -74,26 +93,24 @@ const ProductScreen = (/* { match } */) => {
         <Message variant='danger'>{error}</Message>
       ) : (
         <>
-          <Meta title={product.name} />
+          <Meta title={name} />
           <Row className='mb-5'>
             <Col md={6}>
-              <Image src={product.image} alt={product.name} fluid />
+              <Image src={image} alt={name} fluid />
             </Col>
             <Col md={3}>
               <ListGroup variant='flush'>
                 <ListGroup.Item>
-                  <h3>{product.name}</h3>
+                  <h3>{name}</h3>
                 </ListGroup.Item>
                 <ListGroup.Item>
                   <Rating
-                    value={product.rating}
-                    text={`${product.numReviews} reviews`}
+                    value={productRating}
+                    text={`${numReviews} reviews`}
                   />
                 </ListGroup.Item>
-                <ListGroup.Item>Price: ${product.price}</ListGroup.Item>
-                <ListGroup.Item>
-                  Description: {product.description}
-                </ListGroup.Item>
+                <ListGroup.Item>Price: ${price}</ListGroup.Item>
+                <ListGroup.Item>Description: {description}</ListGroup.Item>
               </ListGroup>
             </Col>
             <Col md={3}>
@@ -103,7 +120,7 @@ const ProductScreen = (/* { match } */) => {
                     <Row>
                       <Col>Price:</Col>
                       <Col>
-                        <strong>${product.price}</strong>
+                        <strong>${price}</strong>
                       </Col>
                     </Row>
                   </ListGroup.Item>
@@ -112,12 +129,12 @@ const ProductScreen = (/* { match } */) => {
                     <Row>
                       <Col>Status:</Col>
                       <Col>
-                        {product.countInStock > 0 ? 'In Stock' : 'Out Of Stock'}
+                        {countInStock > 0 ? 'In Stock' : 'Out Of Stock'}
                       </Col>
                     </Row>
                   </ListGroup.Item>
 
-                  {product.countInStock > 0 && (
+                  {countInStock > 0 && (
                     <ListGroup.Item>
                       <Row>
                         <Col>Qty</Col>
@@ -127,13 +144,11 @@ const ProductScreen = (/* { match } */) => {
                             value={qty}
                             onChange={(e) => setQty(e.target.value)}
                           >
-                            {[...Array(product.countInStock).keys()].map(
-                              (x) => (
-                                <option key={x + 1} value={x + 1}>
-                                  {x + 1}
-                                </option>
-                              )
-                            )}
+                            {[...Array(countInStock).keys()].map((x) => (
+                              <option key={x + 1} value={x + 1}>
+                                {x + 1}
+                              </option>
+                            ))}
                           </Form.Control>
                         </Col>
                       </Row>
@@ -145,7 +160,7 @@ const ProductScreen = (/* { match } */) => {
                       onClick={addToCartHandler}
                       className='btn-block'
                       type='button'
-                      disabled={product.countInStock === 0}
+                      disabled={countInStock === 0}
                     >
                       Add To Cart
                     </Button>
@@ -157,26 +172,30 @@ const ProductScreen = (/* { match } */) => {
           <Row>
             <Col md={6}>
               <h2>Reviews</h2>
-              {product.reviews.length === 0 && (
+              {reviews.length === 0 && (
                 <Message variant='light'>No Reviews</Message>
               )}
               <ListGroup variant='flush'>
-                {product.reviews.map(
-                  ({ _id: id, name, rating, createdAt, comment }) => (
-                    <ListGroup.Item key={id}>
-                      <strong>{name}</strong>
-                      <Rating value={rating} />
-                      <p>{createdAt.substring(0, 10)}</p>
-                      <p>{comment}</p>
-                    </ListGroup.Item>
-                  )
-                )}
+                {reviews.map((review) => (
+                  <ListGroup.Item key={review._id}>
+                    <strong>{review.name}</strong>
+                    <Rating value={review.rating} />
+                    <p>{review.createdAt.substring(0, 10)}</p>
+                    <p>{review.comment}</p>
+                  </ListGroup.Item>
+                ))}
                 <ListGroup.Item className='mt-3'>
-                  {product.reviews.length === 0 ? (
+                  {reviews.length === 0 ? (
                     <h2>Be First To Write A Review</h2>
                   ) : (
                     <h2>Write a Customer Review</h2>
                   )}
+                  {successProductReview && (
+                    <Message variant='success'>
+                      Review submitted successfully
+                    </Message>
+                  )}
+                  {loadingProductReview && <Loader />}
                   {errorProductReview && (
                     <Message variant='danger'>
                       {/* {errorProductReview} */}
